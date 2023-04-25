@@ -19,7 +19,7 @@ export const createlocation = async (req, res) => {
     type,
   });
 
-  const location = await createLocation.save();
+  await createLocation.save();
 
-  res.status(201).json({ location });
+  res.status(201).json({ message: "Send successfully" });
 };
