@@ -19,7 +19,7 @@ export const createlocation = async (req, res) => {
     !type
   ) {
     console.log(req.body);
-    throw new Error("Something went wrong");
+    throw new Error("Something went wrong,Try again");
   }
 
   const createLocation = new Location({
@@ -55,4 +55,23 @@ export const deleteLocation = async (req, res) => {
   }
 
   res.status(202).json({ message: "Deleted Successfully" });
+};
+
+export const updateLocation = async (req, res) => {
+  const { id } = req.params;
+  let location;
+
+  try {
+    location = await Location.findById(id);
+  } catch (error) {
+    res.send(501).json({ message: "Couldn't find Location" });
+  }
+
+  try {
+    await location.update({ status: true });
+  } catch (error) {
+    res.send(501).json({ message: "Couldn't Update try again later" });
+  }
+
+  res.status(202).json({ message: "Update Successfully" });
 };

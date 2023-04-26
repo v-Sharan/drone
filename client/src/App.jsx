@@ -5,13 +5,16 @@ import { useState } from "react";
 import { Button } from "flowbite-react";
 
 function App() {
-  const [loadingDelete, setLoadingDelete] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState({
+    loading: false,
+    id: "",
+  });
   const { data, isLoading, isError, error, refetch } = useQuery("Data", () => {
     return axios.get("https://medical-uav.onrender.com/api/medicaluav");
   });
 
   const handleDelete = (id) => {
-    setLoadingDelete(true);
+    setLoadingDelete({ loading: true, id: id });
     axios
       .delete(`https://medical-uav.onrender.com/api/medicaluav/${id}`)
       .then((res) => {
@@ -19,8 +22,16 @@ function App() {
       })
       .catch((err) => console.log(err))
       .finally(() => {
-        setLoadingDelete(false);
+        setLoadingDelete({ loading: false, id: "" });
       });
+  };
+  const handleUpdate = (id) => {
+    axios
+      .patch(`https://medical-uav.onrender.com/api/medicaluav/${id}`)
+      .then((res) => {
+        refetch();
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -80,16 +91,22 @@ function App() {
                 </th>
                 <td className="px-6 py-4">{row.latitude}</td>
                 <td className="px-6 py-4">{row.longitude}</td>
-                <td className="px-[13vh] py-4">
+                <td className="px-[10vh] py-4 flex items-center gap-2">
+                  <label className="bg-gray-300 p-1 rounded-lg px-3">
+                    Statue
+                  </label>
                   <input
                     id="vue-checkbox-list"
                     type="checkbox"
-                    value=""
+                    checked={row.status}
                     className="w-4 h-4 text-blue-600 bg-gray-200 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                    onClick={() => {
+                      handleUpdate(row._id);
+                    }}
                   />
                 </td>
                 <td className="px-4 py-4">
-                  {!loadingDelete ? (
+                  {!loadingDelete.loading || !(loadingDelete.id === row._id) ? (
                     <Button
                       onClick={() => {
                         handleDelete(row._id);
