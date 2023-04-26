@@ -10,6 +10,17 @@ export const createlocation = async (req, res) => {
   const { accuracy, altitude, altitudeAccuracy, latitude, longitude, type } =
     req.body;
 
+  if (
+    !accuracy ||
+    !altitude ||
+    !altitudeAccuracy ||
+    !latitude ||
+    !longitude ||
+    !type
+  ) {
+    res.status(503).json({ message: "Something went wrong,Try Again" });
+  }
+
   const createLocation = new Location({
     accuracy,
     altitude,
@@ -22,4 +33,24 @@ export const createlocation = async (req, res) => {
   await createLocation.save();
 
   res.status(201).json({ message: "Send successfully" });
+};
+
+export const deleteLocation = async (req, res) => {
+  const { id } = req.params;
+
+  let location;
+
+  try {
+    location = await Location.findById(id);
+  } catch (error) {
+    res.send(501).json({ message: "Couldn't find Location" });
+  }
+
+  try {
+    await location.deleteOne();
+  } catch (error) {
+    res.send(501).json({ message: "Couldn't Delete try again later" });
+  }
+
+  res.status(202).json({ message: "Deleted Successfully" });
 };
