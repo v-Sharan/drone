@@ -29,8 +29,7 @@ function App() {
   };
   const handleUpdate = (id) => {
     axios
-      .patch(`http://localhost:5050/api/medicaluav/${id}`)
-      // .patch(`https://medical-uav.onrender.com/api/medicaluav/${id}`)
+      .patch(`https://medical-uav.onrender.com/api/medicaluav/${id}`)
       .then((res) => {
         refetch();
       })
@@ -63,6 +62,7 @@ function App() {
         <>
           <div className="bg-white p-5 rounded">
             An error Occured While updating the status
+            {errorInUpdate}
           </div>
           <Button
             onClick={() => {
