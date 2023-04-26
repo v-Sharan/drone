@@ -9,6 +9,8 @@ function App() {
     loading: false,
     id: "",
   });
+  const [isErrorInUpdate, setIsErrorInUpdate] = useState(false);
+  const [errorInUpdate, setErrorInUpdate] = useState();
   const { data, isLoading, isError, error, refetch } = useQuery("Data", () => {
     return axios.get("https://medical-uav.onrender.com/api/medicaluav");
   });
@@ -27,11 +29,15 @@ function App() {
   };
   const handleUpdate = (id) => {
     axios
-      .patch(`https://medical-uav.onrender.com/api/medicaluav/${id}`)
+      .patch(`http://localhost:5050/api/medicaluav/${id}`)
+      // .patch(`https://medical-uav.onrender.com/api/medicaluav/${id}`)
       .then((res) => {
         refetch();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setIsErrorInUpdate(true);
+        setErrorInUpdate(err.response.data);
+      });
   };
 
   return (
@@ -43,6 +49,20 @@ function App() {
         <>
           <div className="bg-white p-5 rounded">
             404 Error Occured Reload the page
+          </div>
+          <Button
+            onClick={() => {
+              location.reload();
+            }}
+          >
+            Reload
+          </Button>
+        </>
+      )}
+      {isErrorInUpdate && (
+        <>
+          <div className="bg-white p-5 rounded">
+            An error Occured While updating the status
           </div>
           <Button
             onClick={() => {
@@ -82,7 +102,10 @@ function App() {
           )}
           <tbody>
             {data?.data?.locations?.map((row) => (
-              <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+              <tr
+                key={`${row._id}`}
+                className="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
+              >
                 <th
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -100,7 +123,7 @@ function App() {
                     type="checkbox"
                     checked={row.status}
                     className="w-4 h-4 text-blue-600 bg-gray-200 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                    onClick={() => {
+                    onChange={() => {
                       handleUpdate(row._id);
                     }}
                   />

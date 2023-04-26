@@ -56,7 +56,7 @@ export const updateLocation = async (req, res) => {
   }
 
   try {
-    await location.update({ status: !location.status });
+    await location.updateOne({ status: !location.status });
   } catch (error) {
     res.send(501).json({ message: "Couldn't Update try again later" });
   }
