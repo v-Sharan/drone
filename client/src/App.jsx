@@ -15,10 +15,7 @@ function App() {
     axios
       .delete(`https://medical-uav.onrender.com/api/medicaluav/${id}`)
       .then((res) => {
-        console.log(res);
-        setTimeout(() => {
-          refetch();
-        }, 1000);
+        refetch();
       })
       .catch((err) => console.log(err))
       .finally(() => {

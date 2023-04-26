@@ -10,17 +10,17 @@ export const createlocation = async (req, res) => {
   const { accuracy, altitude, altitudeAccuracy, latitude, longitude, type } =
     req.body;
 
-  // if (
-  //   !accuracy ||
-  //   !altitude ||
-  //   !altitudeAccuracy ||
-  //   !latitude ||
-  //   !longitude ||
-  //   !type
-  // ) {
-  //   console.log(req.body);
-  //   res.status(503).json({ message: "Something went wrong,Try Again" });
-  // }
+  if (
+    !accuracy ||
+    !altitude ||
+    !altitudeAccuracy ||
+    !latitude ||
+    !longitude ||
+    !type
+  ) {
+    console.log(req.body);
+    throw new Error("Something went wrong");
+  }
 
   const createLocation = new Location({
     accuracy,
