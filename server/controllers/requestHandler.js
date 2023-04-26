@@ -28,6 +28,7 @@ export const createlocation = async (req, res) => {
     latitude,
     longitude,
     type,
+    status: false,
   });
 
   await createLocation.save();

@@ -13,7 +13,7 @@ function App() {
   const handleDelete = (id) => {
     setLoadingDelete(true);
     axios
-      .delete(`http://localhost:5050/api/medicaluav/${id}`)
+      .delete(`https://medical-uav.onrender.com/api/medicaluav/${id}`)
       .then((res) => {
         console.log(res);
         setTimeout(() => {
