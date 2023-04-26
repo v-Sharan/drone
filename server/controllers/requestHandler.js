@@ -18,6 +18,7 @@ export const createlocation = async (req, res) => {
     !longitude ||
     !type
   ) {
+    console.log(req.body);
     res.status(503).json({ message: "Something went wrong,Try Again" });
   }
 
