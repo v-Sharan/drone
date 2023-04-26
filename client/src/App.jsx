@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     setLocations(data?.data?.locations);
-  }, [data]);
+  }, [data?.data?.locations]);
 
   return (
     <div className="min-h-screen flex justify-center items-center flex-col gap-10 bg-gradient-to-r from-cyan-200 to-blue-200 ">
