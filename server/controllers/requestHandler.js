@@ -7,13 +7,9 @@ export const getRequest = async (req, res) => {
 };
 
 export const createlocation = async (req, res) => {
-  const { accuracy, altitude, altitudeAccuracy, latitude, longitude, type } =
-    req.body;
+  const { latitude, longitude, type } = req.body;
 
   const createLocation = new Location({
-    accuracy,
-    altitude,
-    altitudeAccuracy,
     latitude,
     longitude,
     type,
