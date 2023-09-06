@@ -12,13 +12,13 @@ function App() {
   const [isErrorInUpdate, setIsErrorInUpdate] = useState(false);
   const [errorInUpdate, setErrorInUpdate] = useState();
   const { data, isLoading, isError, error, refetch } = useQuery("Data", () => {
-    return axios.get("https://madical-uav.onrender.com/api/medicaluav");
+    return axios.get(`${import.meta.env.VITE_APP_URL}/api/medicaluav`);
   });
 
   const handleDelete = (id) => {
     setLoadingDelete({ loading: true, id: id });
     axios
-      .delete(`https://madical-uav.onrender.com/api/medicaluav/${id}`)
+      .delete(`${import.meta.env.VITE_APP_URL}/api/medicaluav/${id}`)
       .then((res) => {
         refetch();
       })
@@ -29,7 +29,7 @@ function App() {
   };
   const handleUpdate = (id) => {
     axios
-      .patch(`https://medical-uav.onrender.com/api/medicaluav/${id}`)
+      .patch(`${import.meta.env.VITE_APP_URL}/api/medicaluav/${id}`)
       .then((res) => {
         refetch();
       })
