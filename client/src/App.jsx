@@ -12,13 +12,13 @@ function App() {
   const [isErrorInUpdate, setIsErrorInUpdate] = useState(false);
   const [errorInUpdate, setErrorInUpdate] = useState();
   const { data, isLoading, isError, error, refetch } = useQuery("Data", () => {
-    return axios.get("https://medical-uav.onrender.com/api/medicaluav");
+    return axios.get("https://madical-uav.onrender.com/api/medicaluav");
   });
 
   const handleDelete = (id) => {
     setLoadingDelete({ loading: true, id: id });
     axios
-      .delete(`https://medical-uav.onrender.com/api/medicaluav/${id}`)
+      .delete(`https://madical-uav.onrender.com/api/medicaluav/${id}`)
       .then((res) => {
         refetch();
       })
